@@ -21,7 +21,7 @@ public class HomeController {
         List<Product> products = productService.getAllProducts();
         model.addAttribute("products", products);
 
-        return "home";
+        return "product/product-list";
     }
 
     @GetMapping("/")

@@ -1,10 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>All Products</title>
+<title>Online Shopping Site</title>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 
 <style>
     body {
@@ -25,6 +28,7 @@
         justify-content: center;
         gap: 20px;
         padding: 20px;
+        min-height: 60vh;
     }
 
     .product-card {
@@ -46,25 +50,21 @@
     .product-name {
         font-size: 18px;
         font-weight: bold;
-        margin-bottom: 5px;
     }
 
     .product-brand {
         color: #555;
         font-size: 14px;
-        margin-bottom: 5px;
     }
 
     .product-price {
         color: #2e7d32;
         font-size: 16px;
         font-weight: bold;
-        margin-bottom: 5px;
     }
 
     .out-of-stock {
         color: red;
-        font-size: 14px;
         font-weight: bold;
     }
 </style>
@@ -72,32 +72,35 @@
 
 <body>
 
-<h2>All Products</h2>
+<!-- HEADER -->
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-<div class="product-container">
+<!-- MAIN CONTENT -->
+<main>
 
-    <c:forEach var="product" items="${products}">
-        <div class="product-card">
+    <div class="product-container">
+        <c:forEach var="product" items="${products}">
+            <div class="product-card">
 
-            <img src="${pageContext.request.contextPath}/resources/images/${product.imageUrl}"
-                 alt="${product.name}">
+                <img src="${pageContext.request.contextPath}/resources/images/${product.imageUrl}"
+                     alt="${product.name}">
 
-            <div class="product-name">${product.name}</div>
+                <div class="product-name">${product.name}</div>
+                <div class="product-brand">${product.brand}</div>
+                <div class="product-description">${product.description}</div>
+                <div class="product-price">₹ ${product.price}</div>
 
-            <div class="product-description">${product.description}</div>
+                <c:if test="${product.stockQuantity == 0}">
+                    <div class="out-of-stock">Out of Stock</div>
+                </c:if>
 
-            <div class="product-brand">${product.brand}</div>
+            </div>
+        </c:forEach>
+    </div>
+</main>
 
-            <div class="product-price">₹ ${product.price}</div>
-
-            <c:if test="${product.stockQuantity == 0}">
-                <div class="out-of-stock">Out of Stock</div>
-            </c:if>
-
-        </div>
-    </c:forEach>
-
-</div>
+<!-- FOOTER -->
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </body>
 </html>
