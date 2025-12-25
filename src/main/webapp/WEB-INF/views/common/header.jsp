@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 
 <!-- HEADER START -->
 <header style="background-color:#222; padding:15px 30px;">
@@ -6,7 +7,7 @@
 
         <!-- LOGO -->
         <div>
-            <a href="${pageContext.request.contextPath}/products"
+            <a href="${pageContext.request.contextPath}/home"
                style="color:#fff; font-size:22px; font-weight:bold; text-decoration:none;">
                 Ecommerce
             </a>
