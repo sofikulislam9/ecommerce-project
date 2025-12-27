@@ -97,7 +97,7 @@
         <div class="product-card">
 
             <!-- CLICKABLE PRODUCT IMAGE -->
-            <a href="${pageContext.request.contextPath}/product/details?id=${product.id}">
+            <a href="${pageContext.request.contextPath}/home/details?id=${product.id}">
                 <img src="${pageContext.request.contextPath}/resources/images/${product.imageUrl}"
                      alt="${product.name}">
             </a>

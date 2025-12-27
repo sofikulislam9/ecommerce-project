@@ -31,10 +31,10 @@ public class HomeController {
     }
 
 
-    @GetMapping("/product/details")
-    public String productDetails(@RequestParam int id, Model model) {
+    @GetMapping("/home/details")
+    public String productDetails(@RequestParam("id") int id, Model model) {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
-        return "product-details";
+        return "product/product-details";
     }
 }

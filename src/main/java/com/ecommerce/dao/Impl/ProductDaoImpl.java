@@ -49,8 +49,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product getProductByID(int id) {
-
         String SQL = "SELECT * FROM products WHERE id = ?";
-        return jdbcTemplate.query(SQL, rowMapper);
+        return jdbcTemplate.queryForObject(SQL, rowMapper, id);
     }
 }
