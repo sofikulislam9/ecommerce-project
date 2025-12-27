@@ -7,8 +7,6 @@
 <meta charset="UTF-8">
 <title>Online Shopping Site</title>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
-
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -45,6 +43,12 @@
         height: 150px;
         object-fit: cover;
         margin-bottom: 10px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+
+    .product-card img:hover {
+        transform: scale(1.05);
     }
 
     .product-name {
@@ -57,6 +61,12 @@
         font-size: 14px;
     }
 
+    .product-description {
+        font-size: 14px;
+        margin: 8px 0;
+        color: #666;
+    }
+
     .product-price {
         color: #2e7d32;
         font-size: 16px;
@@ -66,6 +76,7 @@
     .out-of-stock {
         color: red;
         font-weight: bold;
+        margin-top: 8px;
     }
 </style>
 </head>
@@ -78,25 +89,33 @@
 <!-- MAIN CONTENT -->
 <main>
 
-    <div class="product-container">
-        <c:forEach var="product" items="${products}">
-            <div class="product-card">
+<h2>Our Products</h2>
 
+<div class="product-container">
+
+    <c:forEach var="product" items="${products}">
+        <div class="product-card">
+
+            <!-- CLICKABLE PRODUCT IMAGE -->
+            <a href="${pageContext.request.contextPath}/product/details?id=${product.id}">
                 <img src="${pageContext.request.contextPath}/resources/images/${product.imageUrl}"
                      alt="${product.name}">
+            </a>
 
-                <div class="product-name">${product.name}</div>
-                <div class="product-brand">${product.brand}</div>
-                <div class="product-description">${product.description}</div>
-                <div class="product-price">₹ ${product.price}</div>
+            <div class="product-name">${product.name}</div>
+            <div class="product-brand">${product.brand}</div>
+            <div class="product-description">${product.description}</div>
+            <div class="product-price">₹ ${product.price}</div>
 
-                <c:if test="${product.stockQuantity == 0}">
-                    <div class="out-of-stock">Out of Stock</div>
-                </c:if>
+            <c:if test="${product.stockQuantity == 0}">
+                <div class="out-of-stock">Out of Stock</div>
+            </c:if>
 
-            </div>
-        </c:forEach>
-    </div>
+        </div>
+    </c:forEach>
+
+</div>
+
 </main>
 
 <!-- FOOTER -->

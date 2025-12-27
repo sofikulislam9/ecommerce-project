@@ -1,4 +1,4 @@
-package com.ecommerce.dao.Impl;
+package com.ecommerce.dao;
 
 import com.ecommerce.model.User;
 

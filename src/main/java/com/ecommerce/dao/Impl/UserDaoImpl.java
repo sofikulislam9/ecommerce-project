@@ -1,5 +1,6 @@
 package com.ecommerce.dao.Impl;
 
+import com.ecommerce.dao.UserDao;
 import com.ecommerce.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Repository
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
 
     private final JdbcTemplate jdbcTemplate;
 
