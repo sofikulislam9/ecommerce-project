@@ -14,6 +14,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
+
+        if (!"USER".equals(user.getRole()) && !"ADMIN".equals(user.getRole())) {
+            user.setRole("USER");
+        }
+
         userDao.save(user);
     }
 }

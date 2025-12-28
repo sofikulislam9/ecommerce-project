@@ -36,8 +36,7 @@
         color: #333;
     }
 
-    input[type="text"],
-    input[type="password"] {
+    input {
         width: 100%;
         padding: 10px;
         margin: 8px 0;
@@ -110,7 +109,7 @@
             <div class="error">${error}</div>
         </c:if>
 
-        <!-- USER LOGIN (OPEN BY DEFAULT) -->
+        <!-- USER LOGIN -->
         <div id="userLogin">
             <h2>User Login</h2>
 
@@ -141,14 +140,17 @@
             </form>
 
             <div class="link">
+                New user?
+                <a href="${pageContext.request.contextPath}/auth/register">Create an account</a>
+            </div>
+
+            <div class="link">
                 <a onclick="showUserLogin()">← Back to User Login</a>
             </div>
         </div>
 
     </div>
 </div>
-
-
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Registration</title>
+    <title>Registration</title>
 
     <style>
         body {
@@ -86,23 +86,22 @@
 <div class="container">
     <div class="card">
 
-        <h2>Register</h2>
+        <!-- Dynamic Title -->
+        <h2>
+            <c:choose>
+                <c:when test="${role == 'ADMIN'}">Admin Registration</c:when>
+                <c:otherwise>User Registration</c:otherwise>
+            </c:choose>
+        </h2>
 
-        <!-- Error / Success Message -->
-        <%
-            String error = (String) request.getAttribute("error");
-            String success = (String) request.getAttribute("success");
-            if (error != null) {
-        %>
-            <div class="error"><%= error %></div>
-        <%
-            }
-            if (success != null) {
-        %>
-            <div class="success"><%= success %></div>
-        <%
-            }
-        %>
+        <!-- Error / Success Messages -->
+        <c:if test="${not empty error}">
+            <div class="error">${error}</div>
+        </c:if>
+
+        <c:if test="${not empty success}">
+            <div class="success">${success}</div>
+        </c:if>
 
         <form action="${pageContext.request.contextPath}/register" method="post">
 
@@ -126,8 +125,8 @@
                 <input type="text" name="phone" required />
             </div>
 
-            <!-- Hidden role -->
-            <input type="hidden" name="role" value="USER" />
+            <!-- Role from Controller -->
+            <input type="hidden" name="role" value="${role}" />
 
             <button type="submit" class="btn">Register</button>
         </form>

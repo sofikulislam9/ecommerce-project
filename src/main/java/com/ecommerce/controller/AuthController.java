@@ -4,8 +4,11 @@ import com.ecommerce.model.User;
 import com.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AuthController {
@@ -19,14 +22,29 @@ public class AuthController {
     }
 
     @GetMapping("/auth/register")
-    public  String registerUser(){
+    public  String registerUser(@RequestParam(value = "type", required = false) String type, Model model){
+
+        String role = "USER";
+
+        if ("admin".equalsIgnoreCase(type)) {
+            role = "ADMIN";
+        }
+
+        model.addAttribute("role", role);
         return "auth/register";
     }
 
     @PostMapping("/register")
-    public String save(User user) {
-        userService.save(user);
+    public String save(@ModelAttribute User user, Model model) {
 
+        try{
+            userService.save(user);
+            model.addAttribute("success","Registration successful!");
+        } catch (Exception e) {
+            model.addAttribute("error", "Email already exists");
+        }
+
+        model.addAttribute("role", user.getRole());
         return "redirect:/home";
     }
 
