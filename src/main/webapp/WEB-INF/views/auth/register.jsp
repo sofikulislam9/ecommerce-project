@@ -126,7 +126,7 @@
             </div>
 
             <!-- Role from Controller -->
-            <input type="hidden" name="role" value="${role}" />
+           <input type="hidden" name="role" value="${role}" />
 
             <button type="submit" class="btn">Register</button>
         </form>

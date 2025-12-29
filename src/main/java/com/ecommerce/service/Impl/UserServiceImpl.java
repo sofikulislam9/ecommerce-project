@@ -14,11 +14,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-
-        if (!"USER".equals(user.getRole()) && !"ADMIN".equals(user.getRole())) {
-            user.setRole("USER");
-        }
-
         userDao.save(user);
+    }
+
+    @Override
+    public User login(String email, String password) {
+        return userDao.findByEmailAndPassword(email, password);
     }
 }

@@ -114,6 +114,7 @@
             <h2>User Login</h2>
 
             <form action="${pageContext.request.contextPath}/auth/login" method="post">
+                <input type="hidden" name="role" value="USER">
                 <input type="text" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <button type="submit">Login</button>
@@ -134,6 +135,7 @@
             <h2>Admin Login</h2>
 
             <form action="${pageContext.request.contextPath}/admin/login" method="post">
+                <input type="hidden" name="role" value="ADMIN">
                 <input type="text" name="username" placeholder="Admin Username" required>
                 <input type="password" name="password" placeholder="Admin Password" required>
                 <button type="submit">Login</button>
@@ -141,11 +143,11 @@
 
             <div class="link">
                 New user?
-                <a href="${pageContext.request.contextPath}/auth/register">Create an account</a>
+                <a href="${pageContext.request.contextPath}/auth/register?type=admin">Create admin account</a>
             </div>
 
             <div class="link">
-                <a onclick="showUserLogin()">← Back to User Login</a>
+                <a onclick="showUserLogin()">Back to User Login</a>
             </div>
         </div>
 

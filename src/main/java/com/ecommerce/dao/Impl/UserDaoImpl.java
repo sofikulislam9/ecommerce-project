@@ -43,4 +43,12 @@ public class UserDaoImpl implements UserDao {
         jdbcTemplate.update(SQL,user.getName(), user.getEmail(),
                 user.getPassword(), user.getRole(), user.getPhone());
     }
+
+    @Override
+    public User findByEmailAndPassword(String email, String password) {
+
+        String SQL = "SELECT * FROM users WHERE email = ? AND password = ?";
+
+        return jdbcTemplate.queryForObject(SQL, rowMapper, email, password);
+    }
 }

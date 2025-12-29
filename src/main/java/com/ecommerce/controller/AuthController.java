@@ -2,6 +2,7 @@ package com.ecommerce.controller;
 
 import com.ecommerce.model.User;
 import com.ecommerce.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,18 +35,32 @@ public class AuthController {
         return "auth/register";
     }
 
+    @PostMapping("/login")
+    public String Login(@RequestParam("username") String username,
+                        @RequestParam("password") String password,
+                        HttpSession session, Model model){
+
+        return "redirect:/home";
+    }
+
     @PostMapping("/register")
     public String save(@ModelAttribute User user, Model model) {
 
-        try{
+        try {
+            if (!"ADMIN".equals(user.getRole())) {
+                user.setRole("USER");
+            }
+
             userService.save(user);
-            model.addAttribute("success","Registration successful!");
+            return "redirect:/home";
+
         } catch (Exception e) {
             model.addAttribute("error", "Email already exists");
+            model.addAttribute("role", user.getRole());
+            return "auth/register";
         }
 
-        model.addAttribute("role", user.getRole());
-        return "redirect:/home";
+
     }
 
 }
