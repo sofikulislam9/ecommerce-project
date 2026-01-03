@@ -2,7 +2,6 @@ package com.ecommerce.controller;
 
 import com.ecommerce.model.User;
 import com.ecommerce.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,10 +35,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String Login(@RequestParam("username") String username,
-                        @RequestParam("password") String password,
-                        HttpSession session, Model model){
-
+    public String Login(){
         return "redirect:/home";
     }
 
