@@ -56,7 +56,6 @@ public class AuthController {
             return "auth/register";
         }
 
-
     }
 
 }
