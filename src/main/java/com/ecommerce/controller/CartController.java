@@ -1,5 +1,6 @@
 package com.ecommerce.controller;
 
+
 import com.ecommerce.model.CartItem;
 import com.ecommerce.model.Product;
 import com.ecommerce.service.CartService;
@@ -32,14 +33,6 @@ public class CartController {
 
             Product product = productService.getProductById(productId);
 
-            CartItem cartItem = new CartItem();
-            cartItem.setProductId(product.getId());
-            cartItem.setProductName(product.getName());
-            cartItem.setPrice(product.getPrice());
-            cartItem.setQuantity(1);
-            cartItem.setImageUrl(product.getImageUrl());
-            cartItem.setTotalPrice(product.getPrice());
-
             List<CartItem> sessionCart =
                     (List<CartItem>) session.getAttribute("SESSION_CART");
 
@@ -47,7 +40,29 @@ public class CartController {
                 sessionCart = new ArrayList<>();
             }
 
-            sessionCart.add(cartItem);
+            boolean productExists = false;
+
+            for (CartItem item : sessionCart) {
+                if (item.getProductId() == productId) {
+                    item.setQuantity(item.getQuantity() + 1);
+                    item.setTotalPrice(item.getQuantity() * item.getPrice());
+                    productExists = true;
+                    break;
+                }
+            }
+
+            if (!productExists) {
+                CartItem cartItem = new CartItem();
+                cartItem.setProductId(product.getId());
+                cartItem.setProductName(product.getName());
+                cartItem.setPrice(product.getPrice());
+                cartItem.setQuantity(1);
+                cartItem.setImageUrl(product.getImageUrl());
+                cartItem.setTotalPrice(product.getPrice());
+
+                sessionCart.add(cartItem);
+            }
+
             session.setAttribute("SESSION_CART", sessionCart);
 
         } else {
