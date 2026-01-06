@@ -6,6 +6,8 @@ import com.ecommerce.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CartServiceImpl implements CartService {
 
@@ -17,5 +19,10 @@ public class CartServiceImpl implements CartService {
 
         cartDao.addToCart(userId, item);
 
+    }
+
+    @Override
+    public List<CartItem> getCartItems(int userId) {
+        return cartDao.getCartItems(userId);
     }
 }

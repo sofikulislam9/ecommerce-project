@@ -8,11 +8,20 @@
 <title>Your Cart</title>
 
 <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
     body {
+        display: flex;
+        flex-direction: column;
         font-family: Arial, sans-serif;
         background-color: #f4f6f8;
-        margin: 0;
-        padding: 0;
+    }
+
+    main {
+        flex: 1;
     }
 
     h2 {
@@ -63,17 +72,23 @@
     }
 
     .remove-btn {
-        color: red;
+        color: #fff;
+        background-color: #d32f2f;
+        padding: 6px 12px;
+        border-radius: 4px;
         text-decoration: none;
-        font-weight: bold;
+        font-size: 14px;
+        display: inline-block;
     }
 
     .remove-btn:hover {
-        text-decoration: underline;
+        background-color: #b71c1c;
     }
 
     .cart-summary {
-        text-align: right;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin-top: 20px;
     }
 
@@ -90,6 +105,21 @@
         background-color: #1b5e20;
     }
 
+    .refresh-btn {
+        background-color: #1976d2;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .refresh-btn:hover {
+        background-color: #0d47a1;
+    }
+
     .empty-cart {
         text-align: center;
         font-size: 18px;
@@ -101,7 +131,6 @@
 
 <body>
 
-<!-- HEADER -->
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <main>
@@ -109,14 +138,18 @@
 <h2>Your Shopping Cart</h2>
 
 <c:choose>
+
     <c:when test="${empty cartItems}">
         <div class="empty-cart">
             Your cart is empty 😕 <br><br>
-            <a href="${pageContext.request.contextPath}/home">Continue Shopping</a>
+            <a href="${pageContext.request.contextPath}/home">
+                Continue Shopping
+            </a>
         </div>
     </c:when>
 
     <c:otherwise>
+
         <div class="cart-container">
 
             <table>
@@ -128,8 +161,6 @@
                     <th>Action</th>
                 </tr>
 
-                <c:set var="grandTotal" value="0" />
-
                 <c:forEach var="item" items="${cartItems}">
                     <tr>
                         <td>
@@ -138,37 +169,57 @@
                                 <span>${item.productName}</span>
                             </div>
                         </td>
+
                         <td class="price">₹ ${item.price}</td>
                         <td>${item.quantity}</td>
                         <td class="price">₹ ${item.totalPrice}</td>
+
                         <td>
-                            <a class="remove-btn"
-                               href="${pageContext.request.contextPath}/cart/remove/${item.id}">
-                                Remove
-                            </a>
+                            <c:choose>
+                                <c:when test="${item.id ne null}">
+                                    <a class="remove-btn"
+                                       href="${pageContext.request.contextPath}/cart/remove-db/${item.id}">
+                                        Remove
+                                    </a>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <a class="remove-btn"
+                                       href="${pageContext.request.contextPath}/cart/remove-session/${item.productId}">
+                                        Remove
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                     </tr>
-
-                    <c:set var="grandTotal"
-                           value="${grandTotal + item.totalPrice}" />
                 </c:forEach>
+
             </table>
 
             <div class="cart-summary">
                 <h3>Grand Total: ₹ ${grandTotal}</h3>
-                <a class="checkout-btn"
-                   href="${pageContext.request.contextPath}/checkout">
-                    Proceed to Checkout
-                </a>
+
+                <div>
+                    <button class="refresh-btn"
+                            onclick="window.location.reload();">
+                        Refresh Cart
+                    </button>
+
+                    <a class="checkout-btn"
+                       href="${pageContext.request.contextPath}/checkout">
+                        Checkout
+                    </a>
+                </div>
             </div>
 
         </div>
+
     </c:otherwise>
+
 </c:choose>
 
 </main>
 
-<!-- FOOTER -->
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </body>

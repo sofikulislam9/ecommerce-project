@@ -71,12 +71,28 @@
         color: #2e7d32;
         font-size: 16px;
         font-weight: bold;
+        margin-bottom: 10px;
     }
 
     .out-of-stock {
         color: red;
         font-weight: bold;
         margin-top: 8px;
+    }
+
+    .add-to-cart-btn {
+        background-color: #1976d2;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .add-to-cart-btn:disabled {
+        background-color: #aaa;
+        cursor: not-allowed;
     }
 </style>
 </head>
@@ -96,7 +112,7 @@
     <c:forEach var="product" items="${products}">
         <div class="product-card">
 
-            <!-- CLICKABLE PRODUCT IMAGE -->
+            <!-- PRODUCT IMAGE -->
             <a href="${pageContext.request.contextPath}/home/details?id=${product.id}">
                 <img src="${pageContext.request.contextPath}/resources/images/${product.imageUrl}"
                      alt="${product.name}">
@@ -107,9 +123,24 @@
             <div class="product-description">${product.description}</div>
             <div class="product-price">₹ ${product.price}</div>
 
-            <c:if test="${product.stockQuantity == 0}">
-                <div class="out-of-stock">Out of Stock</div>
-            </c:if>
+            <!-- ADD TO CART -->
+            <c:choose>
+                <c:when test="${product.stockQuantity > 0}">
+                    <form action="${pageContext.request.contextPath}/cart/add" method="post">
+                        <input type="hidden" name="productId" value="${product.id}" />
+                        <button type="submit" class="add-to-cart-btn">
+                            Add to Cart
+                        </button>
+                    </form>
+                </c:when>
+
+                <c:otherwise>
+                    <div class="out-of-stock">Out of Stock</div>
+                    <button class="add-to-cart-btn" disabled>
+                        Add to Cart
+                    </button>
+                </c:otherwise>
+            </c:choose>
 
         </div>
     </c:forEach>
